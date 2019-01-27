@@ -1,3 +1,4 @@
+//https://www.interviewbit.com/problems/black-shapes/
 public class Solution {
         public boolean mark[][] = new boolean[1000][1000];
     public int black(ArrayList<String> A) {
