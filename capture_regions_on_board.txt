@@ -1,0 +1,52 @@
+public class Solution {
+    public boolean mark[][] = new boolean[1000][1000];
+    public void solve(ArrayList<ArrayList<Character>> A) {
+        int size = A.size();
+        int i,j;
+        for(i=0;i<size;i++)
+        {
+        for(j=0;j<A.get(0).size();j++)
+        {
+            ArrayList<Character> arr = A.get(i);
+            if(mark[i][j]==false&&arr.get(j)=='O'&&(((i-1)<0||(j-1)<0)||(i+1)>=A.size()||((j+1)>=A.get(0).size())))
+            {
+                dfs(A,mark,i,j);
+            }
+        }
+        }
+        for(i=0;i<size;i++)
+        {
+            for(j=0;j<A.get(0).size();j++)
+            {
+                ArrayList<Character> arr =A.get(i);
+                Character c = arr.get(j);
+                if(c=='*')
+                {
+                    arr.set(j,'O');
+                }
+                else
+                {
+                    arr.set(j,'X');
+                }
+            }
+        }
+    }
+        public void dfs(ArrayList<ArrayList<Character>>A,boolean mark[][],int a,int b)
+        {
+            mark[a][b] = true;
+            ArrayList<Character>arr = A.get(a);
+            arr.set(b,'*');
+            int dir[][] = {{0,1},{0,-1},{1,0},{-1,0}};
+            for(int k = 0; k < 4; k++)
+            {
+                int i = a+dir[k][0];
+                int j = b+dir[k][1];
+                if(i>=0&&i<A.size()&&j>=0&&j<A.get(0).size()&&A.get(i).get(j)=='O'&&mark[i][j]==false)
+                {
+                    arr.set(j,'*');
+                    dfs(A,mark,i,j);
+                }
+            }
+        }   
+}
+s
