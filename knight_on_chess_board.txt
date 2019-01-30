@@ -1,0 +1,47 @@
+class cord{
+    int x;
+    int y;
+    cord(int x,int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+public class Solution {
+    public int knight(int A, int B, int C, int D, int E, int F) {
+        if(C==E&&D==F)
+        return 0;
+        int i,j,ni=0,nj=0,count = 1;
+        int dir[][] = {{-1,-2},{-1,2},{1,-2},{1,2},{-2,-1},{2,-1},{-2,1},{2,1}};
+        boolean visited[][]= new boolean[A+1][B+1];
+        Queue<cord> q = new LinkedList<>();
+        visited[C][D]= true;
+        q.add(new cord(C,D));
+        q.add(null);
+        while(q.size()!=0)
+        {
+            cord ans = q.poll();
+            if(ans==null)
+            {
+            if(q.isEmpty())
+            break;
+            q.add(null);
+            count++;
+            continue;
+            }
+            for(i=0;i<8;i++)
+            {
+                ni = ans.x+dir[i][0];
+                nj = ans.y+dir[i][1];
+                if(ni>0&&ni<=A&&nj>0&&nj<=B&&visited[ni][nj] == false)
+                {
+                    visited[ni][nj]=true;
+                    q.add(new cord(ni,nj));
+                }
+                if(ni==E&&nj==F)
+                return count;
+            }
+        }
+        return -1;
+    }
+}
