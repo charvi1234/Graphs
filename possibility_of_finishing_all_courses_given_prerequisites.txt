@@ -1,0 +1,47 @@
+public class Solution {
+enum color{
+    white,
+    black,
+    grey;
+}    
+    public int solve(int A, ArrayList<Integer> B, ArrayList<Integer> C) {
+    LinkedList<Integer> mylist[]=new LinkedList[A+1];
+    color visited[] = new color[A+1]; 
+        int i,z=1;
+        for(i=0;i<=A;i++)
+        {
+            mylist[i]=new LinkedList<>();
+            visited[i]=color.white;    
+        }
+        for(i=0;i<B.size();i++)
+        {
+        mylist[B.get(i)].add(C.get(i));
+        }
+        for(i=1;i<=A;i++)
+        {
+            z= dfs(i,visited,mylist);
+            if(z==0)
+            break;
+        }
+        return z;
+    }
+    public int dfs(int v,color visited[],LinkedList<Integer> mylist[])
+    {
+        visited[v]=color.grey;
+        Iterator<Integer>ite = mylist[v].iterator();
+        while(ite.hasNext())
+        {
+            int x = ite.next();
+            if(visited[x]==color.white)
+            {
+              dfs(x,visited,mylist);  
+            }
+            if(visited[x]==color.grey)
+            {
+                return 0;
+            }
+        }
+        visited[v]=color.black;
+        return 1;
+    }
+}
