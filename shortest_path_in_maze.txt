@@ -1,0 +1,81 @@
+/*package whatever //do not write package name here */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class cord
+{
+    int x;
+    int y;
+    public cord(int x,int y)
+    {
+        this.x=x;
+        this.y=y;
+    }
+}
+class GFG {
+    static int bfs(int mat[][],int s1,int s2,int r,int c,int d1,int d2)
+    {
+        if(mat[s1][s2]!=1)
+        return -1;
+        if(s1==d1&&s2==d2)
+        return 0;
+        int i,j,k,count=0;
+        boolean visited[][]= new boolean[1000][1000];
+        Queue<cord> q = new LinkedList<>();
+        visited[0][0]= true;
+        q.add(new cord(0,0));
+        q.add(null);
+        while(!q.isEmpty())
+        {
+            cord ans = q.poll();
+            if(ans==null)
+            {
+                if(q.isEmpty())
+                break;
+                q.add(null);
+                count++;
+                continue;
+            }
+            int dir[][]={{0,1},{0,-1},{1,0},{-1,0}};
+            for(j=0;j<4;j++)
+            {
+                int ni = ans.x+dir[j][0];
+                int nj = ans.y+dir[j][1];
+                if(ni>=0&&ni<r&&nj>=0&&nj<c&&visited[ni][nj]==false&&mat[ni][nj]==1)
+                {
+                    visited[ni][nj]=true;
+                    q.add(new cord(ni,nj));
+                }
+                if(ni==d1&&nj==d2&&mat[ni][nj]==1)
+                return count+1;
+            }
+        }
+        return -1;
+    }
+	public static void main (String[] args) {
+	    int t;
+	    Scanner scan = new Scanner(System.in);
+	    t = scan.nextInt();
+	    while(t!=0)
+	    {
+	        int r,c,i,j;
+	        r = scan.nextInt();
+	        c = scan.nextInt();
+	        int mat[][]= new int[r][c];
+	        for(i=0;i<r;i++)
+	        {
+	            for(j=0;j<c;j++)
+	            {
+	                mat[i][j]=scan.nextInt();
+	            }
+	        }
+	        int d1,d2;
+	        d1= scan.nextInt();
+	        d2=scan.nextInt();
+	        int count=bfs(mat,0,0,r,c,d1,d2);
+	        System.out.println(count);
+	        t--;
+	    }
+	}
+}
